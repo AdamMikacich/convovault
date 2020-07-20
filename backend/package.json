@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Store conversations in a vault",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Adam Mikacich",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.3.3",
+    "slack": "^11.0.2"
+  }
+}
