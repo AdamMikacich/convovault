@@ -5,12 +5,17 @@
   "description": "Store conversations in a vault",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "DEBUG=error,app,http nodemon app.js",
+    "winstart": "set DEBUG=error,app,http && nodemon app.js"
   },
   "author": "Adam Mikacich",
   "dependencies": {
+    "debug": "^4.1.1",
     "express": "^4.17.1",
     "sequelize": "^6.3.3",
     "slack": "^11.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
