@@ -25,8 +25,12 @@ class HTTP {
       const request = req.body;
       debug(request);
 
-      if (request.event.type === 'message') {
+      const type = request.event.type;
+
+      if (type === 'message') {
         db.saveMessage(request.event);
+      } else if (type === 'channel_created' || type === 'channel_rename') {
+        db.updateChannels();
       }
     });
 
