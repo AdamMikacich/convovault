@@ -15,12 +15,6 @@ class HTTP {
     app.use(bodyParser.text());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
-    
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, './../../../frontend/dist/index.html'));
-    });
-
     app.post('/slack', async (req, res) => {
       res.status(200).send();
 
@@ -65,6 +59,11 @@ class HTTP {
       res.status(200).send({
         hello: 'world'
       });
+    });
+
+    app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, './../../../frontend/dist/index.html'));
     });
 
     const port = config.data.http.port;
