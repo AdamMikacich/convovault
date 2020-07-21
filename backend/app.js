@@ -3,12 +3,14 @@ const error = require('debug')('error');
 
 const logger = require('./modules/logger');
 const config = require('./modules/config');
-const http = require('./modules/http');
+const bot = require('./modules/bot');
 const db = require('./modules/db');
+const http = require('./modules/http');
 
 (async () => {
   await logger.init();
   await config.init();
+  await bot.init();
   await db.init();
   await http.init();
   debug('init');

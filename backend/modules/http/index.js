@@ -1,11 +1,11 @@
 const debug = require('debug')('http');
 const error = require('debug')('error');
+const config = require('../config');
 
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
-const config = require('../config');
 const db = require('../db');
 
 class HTTP {

@@ -1,9 +1,9 @@
 const debug = require('debug')('db');
 const error = require('debug')('error');
-
 const config = require('../config');
 
 const { Sequelize, Model, DataTypes } = require('sequelize');
+const bot = require('../bot');
 
 class DB {
   constructor() {
@@ -19,13 +19,15 @@ class DB {
     });
 
     await this.define(sequelize);
+    await this.updateChannels();
   }
 
   async define(sequelize) {
     this.models.Messages = sequelize.define('messages', {
       slack_message_id: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
       },
       slack_channel_id: {
         type: DataTypes.STRING,
@@ -45,7 +47,37 @@ class DB {
       }
     });
 
+    this.models.Channels = sequelize.define('channels', {
+      slack_channel_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+      },
+      slack_channel_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    });
+
     return await sequelize.sync({ alter: true });
+  }
+
+  async updateChannels() {
+    const { Channels } = this.models;
+
+    const response = await bot.slack.conversations.list({});
+    if (response.ok !== true) {
+      error('cannot update channels', response);
+      return;
+    }
+
+    for (const channel of response.channels) {
+      await Channels.upsert({
+        slack_channel_id: channel.id,
+        slack_channel_name: channel.name
+      });
+    }
+    return;
   }
 
   async saveMessage(event) {
