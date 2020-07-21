@@ -1,3 +1,6 @@
+const debug = require('debug')('config');
+const error = require('debug')('error');
+
 const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
