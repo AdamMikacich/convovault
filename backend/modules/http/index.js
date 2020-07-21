@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const config = require('../config');
+const db = require('../db');
 
 class HTTP {
   async init() {
@@ -23,6 +24,10 @@ class HTTP {
 
       const request = req.body;
       debug(request);
+
+      if (request.event.type === 'message') {
+        db.saveMessage(request.event);
+      }
     });
 
     const port = config.data.http.port;

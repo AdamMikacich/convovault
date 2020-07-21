@@ -9,8 +9,8 @@ const db = require('./modules/db');
 (async () => {
   await logger.init();
   await config.init();
-  await http.init();
   await db.init();
+  await http.init();
   debug('init');
 })().catch((err) => {
   error(err);

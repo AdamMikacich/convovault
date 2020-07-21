@@ -19,12 +19,6 @@ class DB {
     });
 
     await this.define(sequelize);
-    // const jane = await User.create({
-    //   username: 'janedoe',
-    //   birthday: new Date(1980, 6, 20)
-    // });
-
-    // console.log(jane);
   }
 
   async define(sequelize) {
@@ -41,10 +35,6 @@ class DB {
         type: DataTypes.STRING,
         allowNull: false
       },
-      slack_user_name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       content: {
         type: DataTypes.STRING,
         allowNull: false
@@ -56,6 +46,20 @@ class DB {
     });
 
     return await sequelize.sync({ alter: true });
+  }
+
+  async saveMessage(event) {
+    const { Messages } = this.models;
+
+    debug(event.blocks);
+
+    // const message = await Messages.create({
+    //   slack_message_id: event.client_msg_id,
+    //   slack_channel_id: event.channel,
+    //   slack_user_id: event.user,
+    //   content: ,
+    //   assets: 
+    // });
   }
 }
 
