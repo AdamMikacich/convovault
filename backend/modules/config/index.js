@@ -27,6 +27,13 @@ class Config {
         pass: '',
         host: '127.0.0.1',
         port: 3306
+      },
+      storage: {
+        endPoint: '127.0.0.1',
+        port: 9000,
+        useSSL: false,
+        accessKey: '',
+        secretKey: ''
       }
     };
   }

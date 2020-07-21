@@ -2,10 +2,13 @@ const debug = require('debug')('storage');
 const error = require('debug')('error');
 const config = require('../config');
 
+const Minio = require('minio');
 const request = require('request');
 
 class Storage {
   async init() {
+    const minioClient = new Minio.Client(config.data.minio);
+
     debug('init');
     return;
   }
