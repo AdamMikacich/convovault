@@ -3,6 +3,7 @@ const error = require('debug')('error');
 const config = require('../config');
 
 const { Sequelize, Model, DataTypes } = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
 const bot = require('../bot');
 const storage = require('../storage');
 
@@ -74,6 +75,27 @@ class DB {
       }
     });
 
+    this.models.Sessions = sequelize.define('sessions', {
+      id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+      },
+      slack_channel_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      slack_user_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      expiration: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.fn('DATE_ADD', 'CURRENT_TIMESTAMP', 'INTERVAL 30 MINUTE'),
+        allowNull: false
+      }
+    });
+
     return await sequelize.sync({ alter: true });
   }
 
@@ -135,6 +157,20 @@ class DB {
       ids.push(id);
     }
     return ids.join(',');
+  }
+
+  async saveSession(request) {
+    const { Sessions } = this.models;
+
+    const id = uuidv4();
+    
+    Sessions.create({
+      id,
+      slack_channel_id: request.channel_id,
+      slack_user_id: request.user_id
+    });
+
+    return id;
   }
 }
 

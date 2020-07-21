@@ -42,6 +42,8 @@ class HTTP {
 
       const request = req.body;
       debug(request);
+
+      db.saveSession(request);
     });
 
     const port = config.data.http.port;
