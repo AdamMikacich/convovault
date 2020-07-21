@@ -183,7 +183,7 @@ class DB {
     const session = await Sessions.findOne({
       where: {
         id,
-        timestamp: {
+        expiration: {
           [Op.lt]: Sequelize.literal('CURRENT_TIMESTAMP')
         }
       }
@@ -195,7 +195,7 @@ class DB {
       where: {
         slack_channel_id: session.slack_channel_id
       },
-      order: sequelize.literal('expiration DESC')
+      order: sequelize.literal('createdAt DESC')
     });
 
     return results;
