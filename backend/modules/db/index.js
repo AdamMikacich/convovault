@@ -91,7 +91,11 @@ class DB {
       },
       expiration: {
         type: 'TIMESTAMP',
-        defaultValue: Sequelize.fn('DATE_ADD', 'CURRENT_TIMESTAMP', 'INTERVAL 30 MINUTE'),
+        defaultValue: Sequelize.fn(
+          'DATE_ADD',
+          Sequelize.literal('CURRENT_TIMESTAMP'),
+          Sequelize.literal('INTERVAL 30 MINUTE')
+        ),
         allowNull: false
       }
     });
