@@ -24,10 +24,8 @@ class HTTP {
     app.post('/slack', async (req, res) => {
       res.status(200).send();
 
-      const request = req.body;
-      debug(request);
-
-      const event = request.event;
+      const event = req.body.event;
+      debug(event);
 
       const { type } = event;
 
@@ -41,12 +39,11 @@ class HTTP {
     app.post('/slack/command', async (req, res) => {
       res.status(200).send();
 
-      const request = req.body;
-      debug(request);
+      const event = req.body;
 
-      const id = db.saveSession(request);
+      const id = db.saveSession(event);
       request.post({
-        url: request.response_url,
+        url: event.response_url,
         headers: {
           'Authorization': `Bearer ${config.data.slack.token}`
         },
