@@ -36,6 +36,13 @@ class HTTP {
       }
     });
 
+    app.post('/slack/command', async (req, res) => {
+      res.status(200).send();
+
+      const request = req.body;
+      debug(request);
+    });
+
     const port = config.data.http.port;
     app.listen(port, () => {
       debug('listening on port', port);
