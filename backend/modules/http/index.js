@@ -47,7 +47,7 @@ class HTTP {
         headers: {
           'Authorization': `Bearer ${config.data.slack.token}`
         },
-        formData: {
+        json: {
           text: 'Your session ID: ' + id
         }
       }, function(err, res) {
