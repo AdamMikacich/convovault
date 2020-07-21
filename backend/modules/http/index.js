@@ -6,6 +6,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const request = require('request');
 const db = require('../db');
 
 class HTTP {
@@ -43,7 +44,19 @@ class HTTP {
       const request = req.body;
       debug(request);
 
-      db.saveSession(request);
+      const id = db.saveSession(request);
+      request.post({
+        url,
+        headers: {
+          'Authorization': `Bearer ${config.data.slack.token}`
+        },
+        formData: {
+          text: 'Your session ID: ' + id
+        }
+      }, function(err, res) {
+        if (err) return error('command response', err);
+        debug('command response', res.body);
+      });
     });
 
     const port = config.data.http.port;
