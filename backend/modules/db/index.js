@@ -41,7 +41,7 @@ class DB {
       },
       assets: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       }
     });
 
@@ -51,15 +51,13 @@ class DB {
   async saveMessage(event) {
     const { Messages } = this.models;
 
-    debug(event.blocks);
-
-    // const message = await Messages.create({
-    //   slack_message_id: event.client_msg_id,
-    //   slack_channel_id: event.channel,
-    //   slack_user_id: event.user,
-    //   content: ,
-    //   assets: 
-    // });
+    return Messages.create({
+      slack_message_id: event.client_msg_id,
+      slack_channel_id: event.channel,
+      slack_user_id: event.user,
+      content: event.text,
+      assets: null
+    });
   }
 }
 
