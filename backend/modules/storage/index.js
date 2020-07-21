@@ -7,7 +7,7 @@ const request = require('request');
 
 class Storage {
   async init() {
-    const minioClient = new Minio.Client(config.data.minio);
+    const minioClient = new Minio.Client(config.data.storage);
 
     debug('init');
     return;
