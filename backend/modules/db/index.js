@@ -2,7 +2,7 @@ const debug = require('debug')('db');
 const error = require('debug')('error');
 const config = require('../config');
 
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { Sequelize, Model, DataTypes, Op } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 const bot = require('../bot');
 const storage = require('../storage');
@@ -175,6 +175,30 @@ class DB {
     });
 
     return id;
+  }
+
+  async getMessages(id) {
+    const { Sessions, Messages } = this.models;
+
+    const session = await Sessions.findOne({
+      where: {
+        id,
+        timestamp: {
+          [Op.lt]: Sequelize.literal('CURRENT_TIMESTAMP')
+        }
+      }
+    });
+
+    if (session === null) return null;
+
+    const results = await Messages.findAll({
+      where: {
+        slack_channel_id: session.slack_channel_id
+      },
+      order: sequelize.literal('timestamp DESC')
+    });
+
+    return results;
   }
 }
 

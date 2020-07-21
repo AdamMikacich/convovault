@@ -56,9 +56,11 @@ class HTTP {
       const { session } = req.query;
       debug(session);
 
-      res.status(200).send({
-        hello: 'world'
-      });
+      const results = await db.getMessages(session);
+
+      debug(results);
+
+      res.status(200).send(results);
     });
 
     app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
