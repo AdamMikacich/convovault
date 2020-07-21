@@ -62,6 +62,18 @@ class DB {
       }
     });
 
+    this.models.Assets = sequelize.define('assets', {
+      id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    });
+
     return await sequelize.sync({ alter: true });
   }
 
@@ -111,9 +123,15 @@ class DB {
   }
 
   async saveFiles(files) {
+    const { Assets } = this.models;
+
     const ids = [];
     for (const file of files) {
       const id = await storage.saveFile(file);
+      await Assets.create({
+        id,
+        name: file.name
+      });
       ids.push(id);
     }
     return ids.join(',');

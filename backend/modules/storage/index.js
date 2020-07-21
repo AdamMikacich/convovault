@@ -57,7 +57,7 @@ class Storage {
 
     const content = await this.getFileFromURL(file.url_private);
     const id = uuidv4();
-    this.minioClient.putObject('assets', id, content, function(err, etag) {
+    this.minioClient.putObject('assets', id, content, (err, etag) => {
       debug(err, etag);
     });
 
