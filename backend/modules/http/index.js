@@ -25,10 +25,15 @@ class HTTP {
       const request = req.body;
       debug(request);
 
-      const type = request.event.type;
+      const event = request.event;
+
+      const { type, subtype } = event;
 
       if (type === 'message') {
-        db.saveMessage(request.event);
+        db.saveMessage(event);
+        if (subtype === 'file_share') {
+          debug(event.files[0]);
+        }
       } else if (type === 'channel_created' || type === 'channel_rename') {
         db.updateChannels();
       }

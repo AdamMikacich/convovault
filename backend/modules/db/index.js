@@ -26,8 +26,7 @@ class DB {
     this.models.Messages = sequelize.define('messages', {
       slack_message_id: {
         type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true
+        allowNull: true
       },
       slack_channel_id: {
         type: DataTypes.STRING,
@@ -90,10 +89,11 @@ class DB {
   async saveMessage(event) {
     const { Messages } = this.models;
 
-    if (event.client_msg_id === undefined) return;
+    let slack_message_id = event.client_msg_id;
+    if (slack_message_id === undefined) slack_message_id = null;
 
     return Messages.create({
-      slack_message_id: event.client_msg_id,
+      slack_message_id,
       slack_channel_id: event.channel,
       slack_user_id: event.user,
       content: event.text,
