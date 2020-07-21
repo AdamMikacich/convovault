@@ -5,8 +5,8 @@
   "description": "Store conversations in a vault",
   "main": "app.js",
   "scripts": {
-    "start": "DEBUG=error,app,http,db nodemon app.js",
-    "winstart": "set DEBUG=error,app,http,db && nodemon app.js"
+    "start": "DEBUG=error,app,http,db nodemon app.js --ignore 'data.json'",
+    "winstart": "set DEBUG=error,app,http,db && nodemon app.js --ignore 'data.json'"
   },
   "author": "Adam Mikacich",
   "dependencies": {
