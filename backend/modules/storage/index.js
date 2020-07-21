@@ -4,6 +4,7 @@ const config = require('../config');
 
 const Minio = require('minio');
 const request = require('request');
+const { v4: uuidv4 } = require('uuid');
 
 class Storage {
   async init() {
@@ -37,21 +38,30 @@ class Storage {
     return this.updateBucket('assets');
   }
 
-  async saveFile(file) {
-    debug(file);
-
+  async getFileFromURL(url) {
     return new Promise((resolve, reject) => {
       request({
-        url: file.url_private,
+        url,
         headers: {
           'Authorization': `Bearer ${config.data.slack.token}`
         }
       }, function(err, res) {
         if (err) return reject(err);
-        debug(res.body);
-        return resolve(file.id);
+        return resolve(res.body);
       });
     });
+  }
+
+  async saveFile(file) {
+    debug(file);
+
+    const content = await getFileFromURL(file.url_private);
+    const id = uuidv4();
+    this.minioClient.putObject('assets', id, content, function(err, etag) {
+      debug(err, etag);
+    });
+
+    return id;
   }
 }
 

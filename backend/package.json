@@ -16,7 +16,8 @@
     "mysql2": "^2.1.0",
     "request": "^2.88.2",
     "sequelize": "^6.3.3",
-    "slack": "^11.0.2"
+    "slack": "^11.0.2",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
