@@ -1,6 +1,6 @@
 <template>
-  <div class="search">
-    <h1>ConvoVault Search</h1>
+  <div id="search">
+    <p>Search</p>
   </div>
 </template>
 
