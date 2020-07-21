@@ -3,12 +3,12 @@
     <div class="container">
       <div class="row">
         <input type="text" placeholder="Search...">
-        <button class="primary">Search</button>
+        <button class="primary" @click="search">Search</button>
         <button>Add Filters</button>
       </div>
       <ul>
         <li class="row">
-          <img src="https://via.placeholder.com/50">
+          <!--<img src="https://via.placeholder.com/50">-->
           <div class="column">
             <h1>Full Name<span> &#183; Time 7:30AM Yesterday</span></h1>
             <p>Test message content here</p>
@@ -21,8 +21,30 @@
 </template>
 
 <script>
+import config from '@/config/data.json';
+
 export default {
-  name: 'Search'
+  name: 'Search',
+  methods: {
+    async request(url) {
+      return new Promise((resolve) => {
+        const http = new XMLHttpRequest();
+        http.onreadystatechange = function() { 
+          if (http.readyState == 4 && http.status == 200) {
+            return resolve(http.responseText)
+          }
+        };
+
+        http.open('GET', url, true);            
+        http.send(null);
+      })
+    },
+    async search() {
+      const { session } = this.$route.query;
+      const result = await this.request(`${config.paths.convovault}/query?session=${session}`);
+      console.log(result);
+    }
+  }
 }
 </script>
 

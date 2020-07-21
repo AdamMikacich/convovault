@@ -13,8 +13,8 @@ import config from '@/config/data.json';
 export default {
   name: 'Home',
   methods: {
-    redirect: function() {
-      window.location.href = config.path;
+    redirect() {
+      window.location.href = config.paths.chat;
     }
   }
 }
