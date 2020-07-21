@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
-    <h1>ConvoVault</h1>
+  <div class="search">
+    <h1>ConvoVault Search</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Search'
 }
 </script>
