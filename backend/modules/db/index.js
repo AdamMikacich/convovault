@@ -98,7 +98,7 @@ class DB {
 
     let assets = null;
     if (event.subtype === 'file_share') {
-      assets = await db.saveFiles(event.files);
+      assets = await this.saveFiles(event.files);
     }
 
     return Messages.create({
