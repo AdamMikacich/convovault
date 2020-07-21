@@ -90,6 +90,8 @@ class DB {
   async saveMessage(event) {
     const { Messages } = this.models;
 
+    if (event.client_msg_id === undefined) return;
+
     return Messages.create({
       slack_message_id: event.client_msg_id,
       slack_channel_id: event.channel,
