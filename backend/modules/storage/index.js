@@ -55,7 +55,7 @@ class Storage {
   async saveFile(file) {
     debug(file);
 
-    const content = await getFileFromURL(file.url_private);
+    const content = await this.getFileFromURL(file.url_private);
     const id = uuidv4();
     this.minioClient.putObject('assets', id, content, function(err, etag) {
       debug(err, etag);
