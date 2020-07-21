@@ -158,15 +158,15 @@ class DB {
     return ids.join(',');
   }
 
-  async saveSession(request) {
+  async saveSession(event) {
     const { Sessions } = this.models;
 
     const id = uuidv4();
     
     Sessions.create({
       id,
-      slack_channel_id: request.channel_id,
-      slack_user_id: request.user_id,
+      slack_channel_id: event.channel_id,
+      slack_user_id: event.user_id,
       expiration: Sequelize.fn(
         'DATE_ADD',
         Sequelize.literal('CURRENT_TIMESTAMP'),
