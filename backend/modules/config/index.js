@@ -44,6 +44,8 @@ class Config {
 
   async init() {
     await this.load();
+    debug('init');
+    return;
   }
 }
 

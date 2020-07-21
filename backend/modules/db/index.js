@@ -4,6 +4,7 @@ const config = require('../config');
 
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const bot = require('../bot');
+const storage = require('../storage');
 
 class DB {
   constructor() {
@@ -20,6 +21,9 @@ class DB {
 
     await this.define(sequelize);
     await this.updateChannels();
+
+    debug('init');
+    return;
   }
 
   async define(sequelize) {
@@ -92,13 +96,27 @@ class DB {
     let slack_message_id = event.client_msg_id;
     if (slack_message_id === undefined) slack_message_id = null;
 
+    let assets = null;
+    if (event.subtype === 'file_share') {
+      assets = await db.saveFiles(event.files);
+    }
+
     return Messages.create({
       slack_message_id,
       slack_channel_id: event.channel,
       slack_user_id: event.user,
       content: event.text,
-      assets: null
+      assets
     });
+  }
+
+  async saveFiles(files) {
+    const ids = [];
+    for (const file of files) {
+      const id = await storage.saveFile(file);
+      ids.push(id);
+    }
+    return ids.join(',');
   }
 }
 

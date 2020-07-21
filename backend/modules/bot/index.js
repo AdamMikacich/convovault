@@ -9,6 +9,8 @@ class Bot {
     this.slack = new Slack({
       token: config.data.slack.token
     });
+    debug('init');
+    return;
   }
 }
 

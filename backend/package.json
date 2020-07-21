@@ -5,13 +5,14 @@
   "description": "Store conversations in a vault",
   "main": "app.js",
   "scripts": {
-    "start": "DEBUG=error,app,http,db,bot nodemon app.js --ignore 'data.json'",
-    "winstart": "set DEBUG=error,app,http,db,bot && nodemon app.js --ignore 'data.json'"
+    "start": "DEBUG=error,app,http,db,bot,storage nodemon app.js --ignore 'data.json'",
+    "winstart": "set DEBUG=error,app,http,db,bot,storage && nodemon app.js --ignore 'data.json'"
   },
   "author": "Adam Mikacich",
   "dependencies": {
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "minio": "^7.0.16",
     "mysql2": "^2.1.0",
     "sequelize": "^6.3.3",
     "slack": "^11.0.2"
