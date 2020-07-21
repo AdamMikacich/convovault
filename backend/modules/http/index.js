@@ -46,7 +46,7 @@ class HTTP {
 
       const id = db.saveSession(request);
       request.post({
-        url,
+        url: request.response_url,
         headers: {
           'Authorization': `Bearer ${config.data.slack.token}`
         },
