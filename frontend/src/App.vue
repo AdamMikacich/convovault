@@ -43,12 +43,21 @@ body {
   align-items: center;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
 .modal {
   width: 600px;
-  height: 250px;
   padding: 40px;
   background: white;
   border-radius: 5px;
-  box-shadow: 0 0 50px rgba(18, 21, 25, 0.2);
+  box-shadow: 0 0 20px rgba(18, 21, 25, 0.15);
 }
 </style>
