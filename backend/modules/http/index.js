@@ -41,7 +41,7 @@ class HTTP {
 
       const event = req.body;
 
-      const id = db.saveSession(event);
+      const id = await db.saveSession(event);
       request.post({
         url: event.response_url,
         headers: {
