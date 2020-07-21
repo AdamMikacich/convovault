@@ -76,6 +76,13 @@ class DB {
         slack_channel_id: channel.id,
         slack_channel_name: channel.name
       });
+
+      if (channel.is_member !== true) {
+        debug('bot joining', channel.id);
+        await bot.slack.conversations.join({
+          channel: channel.id
+        });
+      }
     }
     return;
   }
