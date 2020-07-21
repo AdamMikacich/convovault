@@ -42,13 +42,15 @@ class HTTP {
       const event = req.body;
 
       const id = await db.saveSession(event);
+      const link = config.data.http.root + '/search?session=' + id;
+
       request.post({
         url: event.response_url,
         headers: {
           'Authorization': `Bearer ${config.data.slack.token}`
         },
         json: {
-          text: 'Your session ID: ' + id
+          text: `<${link}|Open the *Vault*>`
         }
       }, function(err, res) {
         if (err) return error('command response', err);

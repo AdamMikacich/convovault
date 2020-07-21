@@ -18,7 +18,8 @@ class Config {
         token: ''
       },
       http: {
-        port: production ? 80 : 3000
+        port: production ? 80 : 3000,
+        root: 'http://localhost'
       },
       db: {
         dialect: 'mysql',
