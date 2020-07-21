@@ -1,49 +1,61 @@
 const debug = require('debug')('db');
 const error = require('debug')('error');
 
-const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('convovault', 'root', '', {
-  host: '127.0.0.1',
-  port: 3306,
-  dialect: 'mysql'
-});
+const config = require('../config');
 
-const Messages = sequelize.define('messages', {
-  slack_message_id: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  slack_channel_id: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  slack_user_id: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  slack_user_name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  content: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  assets: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-});
+const { Sequelize, Model, DataTypes } = require('sequelize');
 
 class DB {
+  constructor() {
+    this.models = {};
+  }
+
   async init() {
-    await sequelize.sync({ alter: true });
+    const options = config.data.db;
+    const sequelize = new Sequelize(options.name, options.user, options.pass, {
+      host: options.host,
+      port: options.port,
+      dialect: options.dialect
+    });
+
+    await this.define(sequelize);
     // const jane = await User.create({
     //   username: 'janedoe',
     //   birthday: new Date(1980, 6, 20)
     // });
 
     // console.log(jane);
+  }
+
+  async define(sequelize) {
+    this.models.Messages = sequelize.define('messages', {
+      slack_message_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      slack_channel_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      slack_user_id: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      slack_user_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      assets: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    });
+
+    return await sequelize.sync({ alter: true });
   }
 }
 

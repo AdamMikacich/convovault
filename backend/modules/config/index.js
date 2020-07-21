@@ -16,6 +16,14 @@ class Config {
       },
       http: {
         port: production ? 80 : 3000
+      },
+      db: {
+        dialect: 'mysql',
+        name: 'convovault',
+        user: 'root',
+        pass: '',
+        host: '127.0.0.1',
+        port: 3306
       }
     };
   }
