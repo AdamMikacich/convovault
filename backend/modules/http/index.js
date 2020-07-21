@@ -58,6 +58,15 @@ class HTTP {
       });
     });
 
+    app.get('/query', async (req, res) => {
+      const { session } = req.query;
+      debug(session);
+
+      res.status(200).send({
+        hello: 'world'
+      });
+    });
+
     const port = config.data.http.port;
     app.listen(port, () => {
       debug('listening on port', port);
