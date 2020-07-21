@@ -58,6 +58,6 @@ body {
   padding: 40px;
   background: white;
   border-radius: 5px;
-  box-shadow: 0 0 20px rgba(18, 21, 25, 0.1);
+  box-shadow: 0 0 10px rgba(18, 21, 25, 0.05);
 }
 </style>

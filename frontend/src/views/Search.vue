@@ -1,15 +1,22 @@
 <template>
-  <div id="search" class="center">
-    <ul>
-      <li class="row">
-        <img src="https://via.placeholder.com/50">
-        <div class="column">
-          <h1>Full Name<span> &#183; Time 7:30AM Yesterday</span></h1>
-          <p>Test message content here</p>
-          <h2>View 3 Assets</h2>
-        </div>
-      </li>
-    </ul>
+  <div id="search" class="center column">
+    <div class="container">
+      <div class="row">
+        <input type="text" placeholder="Search...">
+        <button class="primary">Search</button>
+        <button>Add Filters</button>
+      </div>
+      <ul>
+        <li class="row">
+          <img src="https://via.placeholder.com/50">
+          <div class="column">
+            <h1>Full Name<span> &#183; Time 7:30AM Yesterday</span></h1>
+            <p>Test message content here</p>
+            <h2>View 3 Assets</h2>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -20,14 +27,48 @@ export default {
 </script>
 
 <style scoped lang="scss">
-ul {
-  margin-top: 50px;
-  padding: 40px;
+.container {
+  margin-top: 40px;
+  max-width: 1000px;
+  width: calc(100vw - 100px);
+}
+
+input, button {
+  box-shadow: 0 0 10px rgba(18, 21, 25, 0.05);
+  border: none;
+  outline: none;
+  height: 50px;
+}
+
+input {
+  padding: 15px 30px;
   background: white;
   border-radius: 5px;
   max-width: 1000px;
-  width: calc(100vw - 100px);
-  box-shadow: 0 0 20px rgba(18, 21, 25, 0.1);
+  width: calc(100% - 220px);
+  margin-bottom: 20px;
+}
+
+button {
+  cursor: pointer;
+  background: #828DAB;
+  border-radius: 5px;
+  width: 100px;
+  margin-left: 10px;
+  border: none;
+  color: white;
+}
+
+button.primary {
+  background: #448deb;
+}
+
+ul {
+  padding: 40px;
+  background: white;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(18, 21, 25, 0.05);
 }
 
 li {
@@ -42,9 +83,11 @@ li:not(:first-child) {
 }
 
 li img {
+  width: 50px;
   height: 50px;
   margin-right: 15px;
   border-radius: 50%;
+  background: #828DAB;
 }
 
 li h1 {
