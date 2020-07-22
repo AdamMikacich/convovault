@@ -198,7 +198,11 @@ class DB {
       order: Sequelize.literal('createdAt DESC')
     });
 
-    return results.map((result) => result.toJSON());
+    return results.map((result) => {
+      const json = result.toJSON();
+      json.assets = value.assets.split(',');
+      return json;
+    });
   }
 }
 

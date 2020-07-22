@@ -7,12 +7,16 @@
         <button>Add Filters</button>
       </div>
       <ul>
-        <li class="row">
+        <li
+          class="row"
+          v-for="message in results"
+          :key="message.id"
+        >
           <!--<img src="https://via.placeholder.com/50">-->
           <div class="column">
-            <h1>Full Name<span> &#183; Time 7:30AM Yesterday</span></h1>
-            <p>Test message content here</p>
-            <h2>View 3 Assets</h2>
+            <h1>{{ message.slack_user_id }}<span> &#183; {{ message.createdAt }}</span></h1>
+            <p>{{ message.content }}</p>
+            <h2>View {{ message.assets.length }} Assets</h2>
           </div>
         </li>
       </ul>
@@ -25,6 +29,11 @@ import config from '@/config/data.json';
 
 export default {
   name: 'Search',
+  data() {
+    return {
+      results: []
+    }
+  },
   methods: {
     async request(url) {
       return new Promise((resolve) => {
@@ -41,9 +50,8 @@ export default {
     },
     async search() {
       const { session } = this.$route.query;
-      let result = await this.request(`${config.paths.convovault}/query?session=${session}`);
-      result = JSON.parse(result);
-      console.log(result);
+      const results = await this.request(`${config.paths.convovault}/query?session=${session}`);
+      this.results = JSON.parse(results);
     }
   }
 }
