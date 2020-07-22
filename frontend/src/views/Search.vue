@@ -50,8 +50,12 @@ export default {
     },
     async search() {
       const { session } = this.$route.query;
-      const results = await this.request(`${config.paths.convovault}/query?session=${session}`);
-      this.results = JSON.parse(results);
+      let results = await this.request(`${config.paths.convovault}/query?session=${session}`);
+      results = JSON.parse(results);
+      this.results = results.map((message) => {
+        message.createdAt = new Date(message.createdAt).toLocaleString();
+        return message;
+      });
     }
   }
 }
