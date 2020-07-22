@@ -178,6 +178,8 @@ class DB {
     let message_id = event.client_msg_id;
     if (message_id === undefined) message_id = null;
 
+    if (!event.user) return; // TODO
+
     let assets = '';
     if (event.subtype === 'file_share') {
       assets = await this.saveFiles(event.files);
