@@ -71,15 +71,11 @@ class DB {
         allowNull: false,
         primaryKey: true
       },
-      first_name: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      last_name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      display_name: {
+      real_name: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -164,9 +160,8 @@ class DB {
 
       await Users.upsert({
         user_id: user.id,
-        first_name: user.profile.first_name,
-        last_name: user.profile.last_name,
-        display_name: user.profile.display_name,
+        name: user.name,
+        real_name: user.profile.real_name,
         email: email
       });
     }
