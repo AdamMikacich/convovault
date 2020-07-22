@@ -239,7 +239,7 @@ class DB {
     console.log(query.search);
 
     if (query.search) {
-      where[content] = {
+      where.content = {
         $like: `%${query.search}%`
       }
     }
