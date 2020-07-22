@@ -47,7 +47,7 @@ class DB {
       },
       assets: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
       }
     });
 
@@ -129,7 +129,7 @@ class DB {
     let slack_message_id = event.client_msg_id;
     if (slack_message_id === undefined) slack_message_id = null;
 
-    let assets = null;
+    let assets = '';
     if (event.subtype === 'file_share') {
       assets = await this.saveFiles(event.files);
     }
@@ -200,9 +200,7 @@ class DB {
 
     return results.map((result) => {
       const json = result.toJSON();
-      if (json.assets !== null) {
-        json.assets = json.assets.split(',');
-      }
+      json.assets = json.assets.split(',');
       return json;
     });
   }
