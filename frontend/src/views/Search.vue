@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <input type="text" placeholder="Search...">
-        <button class="primary" @click="search">Search</button>
+        <button class="primary" @click="search" v-model="inputs.search">Search</button>
         <button>Add Filters</button>
       </div>
       <ul>
@@ -31,7 +31,10 @@ export default {
   name: 'Search',
   data() {
     return {
-      results: []
+      results: [],
+      inputs: {
+        search: ''
+      }
     }
   },
   mounted() {
@@ -53,7 +56,9 @@ export default {
     },
     async search() {
       const { session } = this.$route.query;
-      let results = await this.request(`${config.paths.convovault}/query?session=${session}`);
+      let url = `${config.paths.convovault}/query?session=${session}`;
+      if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
+      let results = await this.request(url);
       results = JSON.parse(results);
       this.results = results.map((message) => {
         message.createdAt = new Date(message.createdAt).toLocaleString();
