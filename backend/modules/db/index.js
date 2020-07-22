@@ -117,6 +117,9 @@ class DB {
       }
     });
 
+    Users.hasMany(Messages, {foreignKey: 'user_id'});
+    Messages.belongsTo(Users, {foreignKey: 'user_id'});
+
     return await sequelize.sync({ alter: true });
   }
 
@@ -223,7 +226,7 @@ class DB {
   }
 
   async getMessages(id) {
-    const { Sessions, Messages } = this.models;
+    const { Sessions, Messages, Users } = this.models;
 
     const session = await Sessions.findOne({
       where: {
@@ -240,6 +243,10 @@ class DB {
       where: {
         channel_id: session.channel_id
       },
+      include: [{
+        model: Users,
+        required: true
+      }],
       order: Sequelize.literal('createdAt DESC')
     });
 
