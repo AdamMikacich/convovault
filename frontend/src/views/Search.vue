@@ -34,6 +34,9 @@ export default {
       results: []
     }
   },
+  mounted() {
+    this.search();
+  },
   methods: {
     async request(url) {
       return new Promise((resolve) => {
