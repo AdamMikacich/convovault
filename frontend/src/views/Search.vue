@@ -4,7 +4,7 @@
       <div class="row">
         <input type="text" placeholder="Search..." v-model="inputs.search">
         <button class="primary" @click="search">Search</button>
-        <button>Add Filters</button>
+        <button @click="inputs.search = ''">Clear</button>
       </div>
       <ul>
         <li
