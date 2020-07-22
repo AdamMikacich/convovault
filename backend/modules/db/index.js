@@ -236,11 +236,15 @@ class DB {
       }
     }
 
+    console.log(query.search);
+
     if (query.search) {
       where[content] = {
         $like: `%${query.search}%`
       }
     }
+
+    console.log(where);
 
     const session = await Sessions.findOne({
       where
