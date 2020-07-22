@@ -22,6 +22,7 @@ class DB {
 
     await this.define(sequelize);
     await this.updateChannels();
+    await this.updateUsers();
 
     debug('init');
     return;
@@ -144,6 +145,21 @@ class DB {
           channel: channel.id
         });
       }
+    }
+    return;
+  }
+
+  async updateUsers() {
+    const { Users } = this.models;
+
+    const response = await bot.slack.users.list({});
+    if (response.ok !== true) {
+      error('cannot update users', response);
+      return;
+    }
+
+    for (const user of response.users) {
+      debug(user);
     }
     return;
   }
