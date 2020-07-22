@@ -16,7 +16,7 @@
           <div class="column">
             <h1>{{ message.slack_user_id }}<span> &#183; {{ message.createdAt }}</span></h1>
             <p>{{ message.content }}</p>
-            <h2>View {{ message.assets.length }} Assets</h2>
+            <h2>View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
           </div>
         </li>
       </ul>
