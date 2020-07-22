@@ -117,6 +117,8 @@ class DB {
       }
     });
 
+    const { Users, Messages } = this.models;
+
     Users.hasMany(Messages, {foreignKey: 'user_id'});
     Messages.belongsTo(Users, {foreignKey: 'user_id'});
 
