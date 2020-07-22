@@ -229,14 +229,20 @@ class DB {
   async getMessages(query) {
     const { Sessions, Messages, Users } = this.models;
 
-    const where = {
-      id: query.session,
-      expiration: {
-        [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
+    const session = await Sessions.findOne({
+      where: {
+        id: query.session,
+        expiration: {
+          [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
+        }
       }
-    }
+    });
 
-    console.log(query.search);
+    if (session === null) return null;
+
+    const where = {
+      channel_id: session.channel_id
+    }
 
     if (query.search) {
       where.content = {
@@ -244,18 +250,8 @@ class DB {
       }
     }
 
-    console.log(where);
-
-    const session = await Sessions.findOne({
-      where
-    });
-
-    if (session === null) return null;
-
     const results = await Messages.findAll({
-      where: {
-        channel_id: session.channel_id
-      },
+      where,
       include: [{
         model: Users,
         required: true
