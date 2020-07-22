@@ -53,10 +53,10 @@ class HTTP {
     });
 
     app.get('/query', async (req, res) => {
-      const { session } = req.query;
-      debug(session);
+      const query = req.query;
+      debug(query);
 
-      const results = await db.getMessages(session);
+      const results = await db.getMessages(query);
       debug(results);
 
       res.status(200).send(results);

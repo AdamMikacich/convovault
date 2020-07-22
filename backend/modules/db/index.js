@@ -226,16 +226,24 @@ class DB {
     return id;
   }
 
-  async getMessages(id) {
+  async getMessages(query) {
     const { Sessions, Messages, Users } = this.models;
 
-    const session = await Sessions.findOne({
-      where: {
-        id,
-        expiration: {
-          [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
-        }
+    const where = {
+      id: query.session,
+      expiration: {
+        [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
       }
+    }
+
+    if (query.search) {
+      where[content] = {
+        $like: `%${query.search}%`
+      }
+    }
+
+    const session = await Sessions.findOne({
+      where
     });
 
     if (session === null) return null;
