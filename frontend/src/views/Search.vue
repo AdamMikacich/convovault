@@ -2,7 +2,7 @@
   <div id="search" class="center column">
     <div class="container">
       <div class="row">
-        <input type="text" placeholder="Search..." v-model="inputs.search">
+        <input type="text" placeholder="Search..." v-model="inputs.search" @change="search">
         <button class="primary" @click="search">Search</button>
         <button @click="inputs.search = ''">Clear</button>
       </div>
