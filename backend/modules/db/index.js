@@ -32,8 +32,7 @@ class DB {
     this.models.Messages = sequelize.define('messages', {
       message_id: {
         type: DataTypes.STRING,
-        allowNull: true,
-        primaryKey: true
+        allowNull: true
       },
       channel_id: {
         type: DataTypes.STRING,
