@@ -57,7 +57,6 @@ class HTTP {
       debug(session);
 
       const results = await db.getMessages(session);
-
       debug(results);
 
       res.status(200).send(results);

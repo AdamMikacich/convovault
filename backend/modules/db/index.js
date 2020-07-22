@@ -198,7 +198,7 @@ class DB {
       order: Sequelize.literal('createdAt DESC')
     });
 
-    return results;
+    return results.map((result) => result.toString());
   }
 }
 
