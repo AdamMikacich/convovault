@@ -41,7 +41,8 @@ export default {
     },
     async search() {
       const { session } = this.$route.query;
-      const result = await this.request(`${config.paths.convovault}/query?session=${session}`);
+      let result = await this.request(`${config.paths.convovault}/query?session=${session}`);
+      result = JSON.parse(result);
       console.log(result);
     }
   }
