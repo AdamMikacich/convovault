@@ -184,7 +184,7 @@ class DB {
       where: {
         id,
         expiration: {
-          [Op.lt]: Sequelize.literal('CURRENT_TIMESTAMP')
+          [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
         }
       }
     });
