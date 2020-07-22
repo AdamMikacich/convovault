@@ -2,8 +2,8 @@
   <div id="search" class="center column">
     <div class="container">
       <div class="row">
-        <input type="text" placeholder="Search...">
-        <button class="primary" @click="search" v-model="inputs.search">Search</button>
+        <input type="text" placeholder="Search..." v-model="inputs.search">
+        <button class="primary" @click="search">Search</button>
         <button>Add Filters</button>
       </div>
       <ul>
