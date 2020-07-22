@@ -85,8 +85,8 @@ class DB {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false
-      },
+        allowNull: true
+      }
     });
 
     this.models.Assets = sequelize.define('assets', {
@@ -158,8 +158,17 @@ class DB {
       return;
     }
 
-    for (const user of response.users) {
-      debug(user);
+    for (const user of response.members) {
+      let email = user.profile.email;
+      if (email === undefined) email = null;
+
+      await Users.upsert({
+        user_id: user.id,
+        first_name: user.profile.first_name,
+        last_name: user.profile.last_name,
+        display_name: user.profile.display_name,
+        email: email
+      });
     }
     return;
   }
