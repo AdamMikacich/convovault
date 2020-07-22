@@ -29,15 +29,16 @@ class DB {
 
   async define(sequelize) {
     this.models.Messages = sequelize.define('messages', {
-      slack_message_id: {
+      message_id: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        primaryKey: true
       },
-      slack_channel_id: {
+      channel_id: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      slack_user_id: {
+      user_id: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -52,15 +53,39 @@ class DB {
     });
 
     this.models.Channels = sequelize.define('channels', {
-      slack_channel_id: {
+      channel_id: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true
       },
-      slack_channel_name: {
+      channel_name: {
         type: DataTypes.STRING,
         allowNull: false
       }
+    });
+
+    this.models.Users = sequelize.define('users', {
+      user_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+      },
+      first_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      last_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      display_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
     });
 
     this.models.Assets = sequelize.define('assets', {
@@ -81,11 +106,11 @@ class DB {
         allowNull: false,
         primaryKey: true
       },
-      slack_channel_id: {
+      channel_id: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      slack_user_id: {
+      user_id: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -109,8 +134,8 @@ class DB {
 
     for (const channel of response.channels) {
       await Channels.upsert({
-        slack_channel_id: channel.id,
-        slack_channel_name: channel.name
+        channel_id: channel.id,
+        channel_name: channel.name
       });
 
       if (channel.is_member !== true) {
@@ -126,8 +151,8 @@ class DB {
   async saveMessage(event) {
     const { Messages } = this.models;
 
-    let slack_message_id = event.client_msg_id;
-    if (slack_message_id === undefined) slack_message_id = null;
+    let message_id = event.client_msg_id;
+    if (message_id === undefined) message_id = null;
 
     let assets = '';
     if (event.subtype === 'file_share') {
@@ -135,9 +160,9 @@ class DB {
     }
 
     return Messages.create({
-      slack_message_id,
-      slack_channel_id: event.channel,
-      slack_user_id: event.user,
+      message_id,
+      channel_id: event.channel,
+      user_id: event.user,
       content: event.text,
       assets
     });
@@ -165,8 +190,8 @@ class DB {
     
     Sessions.create({
       id,
-      slack_channel_id: event.channel_id,
-      slack_user_id: event.user_id,
+      channel_id: event.channel_id,
+      user_id: event.user_id,
       expiration: Sequelize.fn(
         'DATE_ADD',
         Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -193,7 +218,7 @@ class DB {
 
     const results = await Messages.findAll({
       where: {
-        slack_channel_id: session.slack_channel_id
+        channel_id: session.channel_id
       },
       order: Sequelize.literal('createdAt DESC')
     });
