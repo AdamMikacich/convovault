@@ -195,7 +195,7 @@ class DB {
       where: {
         slack_channel_id: session.slack_channel_id
       },
-      order: sequelize.literal('createdAt DESC')
+      order: Sequelize.literal('createdAt DESC')
     });
 
     return results;
