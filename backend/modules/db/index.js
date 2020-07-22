@@ -200,7 +200,9 @@ class DB {
 
     return results.map((result) => {
       const json = result.toJSON();
-      json.assets = json.assets.split(',');
+      if (json.assets !== null) {
+        json.assets = json.assets.split(',');
+      }
       return json;
     });
   }
