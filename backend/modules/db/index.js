@@ -240,7 +240,7 @@ class DB {
 
     if (query.search) {
       where.content = {
-        $like: `%${query.search}%`
+        [Op.like]: `%${query.search}%`
       }
     }
 
