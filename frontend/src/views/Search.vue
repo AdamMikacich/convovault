@@ -6,6 +6,21 @@
         <button class="primary" @click="search">Search</button>
         <button @click="inputs.search = ''">Clear</button>
       </div>
+      <div
+        class="assets"
+        v-if="view !== null"
+      >
+        <ul>
+          <h1>Asset Viewer</h1>
+          <h3 @click="view = null">Close</h3>
+          <li
+            v-for="asset in view"
+            :key="asset"
+          >
+            <h2>{{ asset }}</h2>
+          </li>
+        </ul>
+      </div>
       <ul v-if="results !== null && results.length > 0">
         <li
           class="row"
@@ -16,7 +31,7 @@
           <div class="column">
             <h1>{{ message.user.real_name }} ({{ message.user.name }})<span> &#183; {{ message.createdAt }}</span></h1>
             <p>{{ message.content }}</p>
-            <h2>View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
+            <h2 @click="view = message.assets">View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
           </div>
         </li>
       </ul>
@@ -40,7 +55,8 @@ export default {
       results: [],
       inputs: {
         search: ''
-      }
+      },
+      view: null
     }
   },
   mounted() {
@@ -168,5 +184,26 @@ li h2 {
   font-size: 0.9em;
   color: #448deb;
   cursor: pointer;
+}
+
+.assets {
+  margin: 20px;
+  z-index: 10;
+  position: absolute;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  max-width: 960px;
+  width: calc(100vw - 140px);
+}
+
+.assets h3 {
+  font-weight: normal;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.assets li {
+  min-height: 0;
+  font-size: 1em;
 }
 </style>

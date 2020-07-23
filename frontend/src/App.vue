@@ -37,6 +37,10 @@ body {
   box-sizing: border-box;
 }
 
+ul {
+  list-style: none;
+}
+
 .center {
   display: flex;
   justify-content: center;
