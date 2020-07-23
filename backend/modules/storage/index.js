@@ -5,6 +5,7 @@ const config = require('../config');
 const Minio = require('minio');
 const request = require('request');
 const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 
 class Storage {
   async init() {
@@ -67,7 +68,8 @@ class Storage {
 
   async getFile(id) {
     return new Promise((resolve, reject) => {
-      this.minioClient.fGetObject('assets', id, `/tmp/${id}`, function(err) {
+      const path = path.join(__dirname, `../../tmp/${id}`);
+      this.minioClient.fGetObject('assets', id, path, function(err) {
         if (err) return error(err);
         debug('saved in tmp', id);
         resolve();
