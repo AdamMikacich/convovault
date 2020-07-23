@@ -84,7 +84,7 @@ class HTTP {
         return;
       }
       
-      const location = path.join(__dirname, `../../tmp/${id}`);
+      const location = path.join(__dirname, `../../tmp/${query.id}`);
       res.status(200).download(location, name);
     });
 
