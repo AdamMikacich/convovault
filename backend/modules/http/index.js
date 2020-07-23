@@ -84,7 +84,8 @@ class HTTP {
         return;
       }
       
-      res.status(200).download(`/tmp/${query.id}`, name);
+      const location = path.join(__dirname, `../../tmp/${id}`);
+      res.status(200).download(location, name);
     });
 
     app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
