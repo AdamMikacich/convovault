@@ -240,7 +240,7 @@ class DB {
       }
     });
 
-    if (session === null) return null;
+    if (session === null) return [null];
 
     const where = {
       channel_id: session.channel_id

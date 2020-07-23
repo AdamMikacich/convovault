@@ -86,9 +86,8 @@ export default {
       let url = `${config.paths.convovault}/query?session=${session}`;
       if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
       let results = await this.request(url);
-      console.log(results);
       results = JSON.parse(results);
-      if (results == null) {
+      if (results[0] === null) {
         this.results = null;
         return;
       }
