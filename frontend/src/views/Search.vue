@@ -86,11 +86,11 @@ export default {
       let url = `${config.paths.convovault}/query?session=${session}`;
       if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
       let results = await this.request(url);
+      results = JSON.parse(results);
       if (results == null) {
         this.results = null;
         return;
       }
-      results = JSON.parse(results);
       this.results = results.map((message) => {
         message.createdAt = new Date(message.createdAt).toLocaleString();
         return message;
