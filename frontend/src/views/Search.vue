@@ -119,6 +119,8 @@ export default {
       this.assets = [];
     },
     download(asset) {
+      const { session } = this.$route.query;
+
       let url = `${config.paths.convovault}/download?session=${session}`;
       url += `&id=${asset.id}`;
       window.location.href = url;
