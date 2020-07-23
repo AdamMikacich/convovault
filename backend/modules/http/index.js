@@ -77,9 +77,9 @@ class HTTP {
       debug(query);
 
       const name = await db.getAsset(query);
-      debug(file);
+      debug(name);
 
-      if (file === null) {
+      if (name === null) {
         res.status(401).send();
         return;
       }
