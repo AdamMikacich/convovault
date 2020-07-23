@@ -68,8 +68,8 @@ class Storage {
 
   async getFile(id) {
     return new Promise((resolve, reject) => {
-      const path = path.join(__dirname, `../../tmp/${id}`);
-      this.minioClient.fGetObject('assets', id, path, function(err) {
+      const location = path.join(__dirname, `../../tmp/${id}`);
+      this.minioClient.fGetObject('assets', id, location, function(err) {
         if (err) return error(err);
         debug('saved in tmp', id);
         resolve();
