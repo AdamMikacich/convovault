@@ -106,6 +106,7 @@ export default {
       this.view = true;
       let url = `${config.paths.convovault}/assets?session=${session}`;
       url += `&ids=${ids.join(',')}`;
+      let results = await this.request(url);
       results = JSON.parse(results);
 
       console.log(results);
