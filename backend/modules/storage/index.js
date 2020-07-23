@@ -67,7 +67,7 @@ class Storage {
 
   async getFile(id) {
     return new Promise((resolve, reject) => {
-      this.minioClient.getObject('assets', id, (err, data) => {
+      this.minioClient.getObject('assets', id, (err, dataStream) => {
         if (err) {
           error(err);
           return reject();
