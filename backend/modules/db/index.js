@@ -273,14 +273,34 @@ class DB {
   }
 
   async getAssets(query) {
-    const { Sessions, Messages, Users } = this.models;
+    const { Sessions, Assets } = this.models;
 
     debug(query);
 
-    return [{
-      id: 1,
-      name: 'test.txt'
-    }]
+    const ids = query.ids.split(',');
+
+    const session = await Sessions.findOne({
+      where: {
+        id: query.session,
+        expiration: {
+          [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
+        }
+      }
+    });
+    if (session === null) return [null];
+
+    const results = [];
+
+    for (const id of ids) {
+      const result = await Assets.findOne({
+        where: {
+          id
+        }
+      });
+      results.push(result);
+    }
+
+    return results;
   }
 }
 
