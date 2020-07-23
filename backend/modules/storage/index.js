@@ -72,9 +72,17 @@ class Storage {
           error(err);
           return reject();
         }
-        debug('accessed file', id);
-
-        resolve(data.Body.toString('utf-8'));
+        dataStream.on('data', function(chunk) {
+          console.log(chunk);
+        })
+        dataStream.on('end', function() {
+          debug('accessed file', id);
+          return resolve('test');
+        });
+        dataStream.on('error', function(err) {
+          error(err);
+          return reject();
+        })
       });
     });
   }
