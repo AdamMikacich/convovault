@@ -8,16 +8,16 @@
       </div>
       <div
         class="assets"
-        v-if="view !== null"
+        v-if="view === true"
       >
         <ul>
           <h1>Asset Viewer</h1>
-          <h3 @click="view = null">Close</h3>
+          <h3 @click="close">Close</h3>
           <li
-            v-for="asset in view"
-            :key="asset"
+            v-for="asset in assets"
+            :key="asset.id"
           >
-            <h2>{{ asset }}</h2>
+            <h2>{{ asset.name }}</h2>
           </li>
         </ul>
       </div>
@@ -31,7 +31,7 @@
           <div class="column">
             <h1>{{ message.user.real_name }} ({{ message.user.name }})<span> &#183; {{ message.createdAt }}</span></h1>
             <p>{{ message.content }}</p>
-            <h2 @click="view = message.assets">View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
+            <h2 @click="open(message.assets)">View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
           </div>
         </li>
       </ul>
@@ -56,7 +56,8 @@ export default {
       inputs: {
         search: ''
       },
-      view: null
+      view: false,
+      assets: []
     }
   },
   mounted() {
@@ -83,10 +84,12 @@ export default {
     },
     async search() {
       const { session } = this.$route.query;
+
       let url = `${config.paths.convovault}/query?session=${session}`;
       if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
       let results = await this.request(url);
       results = JSON.parse(results);
+
       if (results[0] === null) {
         this.results = null;
         return;
@@ -95,6 +98,24 @@ export default {
         message.createdAt = new Date(message.createdAt).toLocaleString();
         return message;
       });
+    },
+    async open(ids) {
+      const { session } = this.$route.query;
+
+      if (ids.length === 0) return;
+      this.view = true;
+      let url = `${config.paths.convovault}/assets?session=${session}`;
+      url += `&ids=${ids.join(',')}`;
+      results = JSON.parse(results);
+
+      console.log(results);
+
+      if (results[0] === null) return;
+      this.assets = results;
+    },
+    close() {
+      this.view = false;
+      this.assets = [];
     }
   }
 }

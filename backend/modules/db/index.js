@@ -271,6 +271,17 @@ class DB {
       return json;
     });
   }
+
+  async getAssets(query) {
+    const { Sessions, Messages, Users } = this.models;
+
+    debug(query);
+
+    return [{
+      id: 1,
+      name: 'test.txt'
+    }]
+  }
 }
 
 module.exports = new DB();
