@@ -320,8 +320,14 @@ class DB {
     });
     if (session === null) return null;
 
-    const result = await storage.getFile(id);
-    return result;
+    storage.getFile(id);
+
+    const result = await Assets.findOne({
+      where: {
+        id
+      }
+    });
+    return result.name;
   }
 }
 

@@ -59,7 +59,7 @@ class Storage {
     const id = uuidv4();
     this.minioClient.putObject('assets', id, content, (err, etag) => {
       if (err) return error(err);
-      debug(err, etag);
+      debug('saved in minio', etag);
     });
 
     return id;
@@ -67,23 +67,11 @@ class Storage {
 
   async getFile(id) {
     return new Promise((resolve, reject) => {
-      this.minioClient.getObject('assets', id, (err, dataStream) => {
-        if (err) {
-          error(err);
-          return reject();
-        }
-        dataStream.on('data', function(chunk) {
-          console.log(chunk);
-        })
-        dataStream.on('end', function() {
-          debug('accessed file', id);
-          return resolve('test');
-        });
-        dataStream.on('error', function(err) {
-          error(err);
-          return reject();
-        })
-      });
+      this.minioClient.fGetObject('assets', id, `/tmp/${id}`, function(err) {
+        if (err) return error(err);
+        debug('saved in tmp', id);
+        resolve();
+      })
     });
   }
 }

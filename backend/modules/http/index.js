@@ -76,15 +76,15 @@ class HTTP {
       const query = req.query;
       debug(query);
 
-      const file = await db.getAsset(query);
+      const name = await db.getAsset(query);
       debug(file);
 
       if (file === null) {
         res.status(401).send();
         return;
       }
-
-      res.status(200).download(file);
+      
+      res.status(200).download(`/tmp/${query.id}`, name);
     });
 
     app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
