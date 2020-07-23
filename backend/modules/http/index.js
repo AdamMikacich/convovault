@@ -72,6 +72,21 @@ class HTTP {
       res.status(200).send(results);
     });
 
+    app.get('/download', async (req, res) => {
+      const query = req.query;
+      debug(query);
+
+      const file = await db.getAsset(query);
+      debug(file);
+
+      if (file === null) {
+        res.status(401).send();
+        return;
+      }
+
+      res.status(200).download(file);
+    });
+
     app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, './../../../frontend/dist/index.html'));

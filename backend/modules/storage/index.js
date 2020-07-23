@@ -58,10 +58,25 @@ class Storage {
     const content = await this.getFileFromURL(file.url_private);
     const id = uuidv4();
     this.minioClient.putObject('assets', id, content, (err, etag) => {
+      if (err) return error(err);
       debug(err, etag);
     });
 
     return id;
+  }
+
+  async getFile(id) {
+    return new Promise((resolve, reject) => {
+      this.minioClient.getObject('assets', id, (err, data) => {
+        if (err) {
+          error(err);
+          return reject();
+        }
+        debug('accessed file', id);
+
+        resolve(data.Body.toString('utf-8'));
+      });
+    });
   }
 }
 

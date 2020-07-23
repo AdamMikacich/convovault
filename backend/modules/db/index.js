@@ -302,6 +302,27 @@ class DB {
 
     return results;
   }
+
+  async getAsset(query) {
+    const { Sessions, Assets } = this.models;
+
+    debug(query);
+
+    const { id } = query;
+
+    const session = await Sessions.findOne({
+      where: {
+        id: query.session,
+        expiration: {
+          [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
+        }
+      }
+    });
+    if (session === null) return null;
+
+    const result = await storage.getFile(id);
+    return result;
+  }
 }
 
 module.exports = new DB();

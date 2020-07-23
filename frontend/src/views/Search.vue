@@ -17,7 +17,7 @@
             v-for="asset in assets"
             :key="asset.id"
           >
-            <h2>{{ asset.name }}</h2>
+            <h2 @click="download(asset)">{{ asset.name }}</h2>
           </li>
         </ul>
       </div>
@@ -117,6 +117,11 @@ export default {
     close() {
       this.view = false;
       this.assets = [];
+    },
+    download(asset) {
+      let url = `${config.paths.convovault}/download?session=${session}`;
+      url += `&id=${asset.id}`;
+      window.location.href = url;
     }
   }
 }
