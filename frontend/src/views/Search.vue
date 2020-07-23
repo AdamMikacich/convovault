@@ -6,7 +6,7 @@
         <button class="primary" @click="search">Search</button>
         <button @click="inputs.search = ''">Clear</button>
       </div>
-      <ul>
+      <ul v-if="results !== null && results.length > 0">
         <li
           class="row"
           v-for="message in results"
@@ -19,6 +19,12 @@
             <h2>View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
           </div>
         </li>
+      </ul>
+      <ul v-else-if="results !== null">
+        <h3>No Results</h3>
+      </ul>
+      <ul v-else>
+        <h3>Expired Session (please run /vault again)</h3>
       </ul>
     </div>
   </div>
@@ -64,6 +70,10 @@ export default {
       let url = `${config.paths.convovault}/query?session=${session}`;
       if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
       let results = await this.request(url);
+      if (results == null) {
+        this.results = null;
+        return;
+      }
       results = JSON.parse(results);
       this.results = results.map((message) => {
         message.createdAt = new Date(message.createdAt).toLocaleString();
