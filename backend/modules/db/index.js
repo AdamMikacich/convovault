@@ -304,7 +304,7 @@ class DB {
   }
 
   async getAssetURL(query) {
-    const { Sessions } = this.models;
+    const { Sessions, Assets } = this.models;
 
     const { id } = query;
 
@@ -318,7 +318,13 @@ class DB {
     });
     if (session === null) return null;
 
-    return storage.getAssetURL(id);
+    const { name } = await Assets.findOne({
+      where: {
+        id
+      }
+    });
+
+    return storage.getAssetURL(id, name);
   }
 }
 
