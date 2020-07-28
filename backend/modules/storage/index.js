@@ -43,6 +43,7 @@ class Storage {
     return new Promise((resolve, reject) => {
       request({
         url,
+        encoding: null,
         headers: {
           'Authorization': `Bearer ${config.data.slack.token}`
         }
