@@ -37,6 +37,10 @@ body {
   box-sizing: border-box;
 }
 
+*::placeholder {
+  color: #666;
+}
+
 ul {
   list-style: none;
 }

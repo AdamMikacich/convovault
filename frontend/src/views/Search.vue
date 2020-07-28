@@ -11,6 +11,15 @@
         <datetime v-model="inputs.dateEnd" :value-zone="timezone" placeholder="End Date"></datetime>
         <button @click="inputs.dateStart = null; inputs.dateEnd = null;">Clear Date</button>
       </div>
+      <div class="row users">
+        <select name="users" v-model="inputs.user">
+          <option disabled selected value="null">User</option>
+          <option value="saab">Bob</option>
+          <option value="mercedes">Dude</option>
+          <option value="audi">Another dude</option>
+        </select>
+        <button @click="inputs.user = null">Clear User</button>
+      </div>
       <div
         class="assets"
         v-if="view === true"
@@ -73,7 +82,8 @@ export default {
       inputs: {
         search: '',
         dateStart: null,
-        dateEnd: null
+        dateEnd: null,
+        user: null
       },
       view: false,
       assets: [],
@@ -170,14 +180,14 @@ export default {
   width: calc(100vw - 100px);
 }
 
-input, button {
+input, button, select {
   box-shadow: 0 0 10px rgba(18, 21, 25, 0.05);
   border: none;
   outline: none;
   height: 50px;
 }
 
-input {
+input, select {
   padding: 15px 30px;
   background: white;
   border-radius: 5px;
@@ -234,6 +244,15 @@ button.primary {
 
 .vdatetime-popup__actions__button {
   color: #448deb;
+}
+
+.users select {
+  width: 100%;
+  color: #666;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0;
+  text-overflow: '';
 }
 
 ul {
