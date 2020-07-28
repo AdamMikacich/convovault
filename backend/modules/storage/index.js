@@ -69,7 +69,7 @@ class Storage {
   async getAssetURL(id) {
     return new Promise((resolve, reject) => {
       this.minioClient.presignedGetObject('assets', id, 1*60*60, {
-        'Content-Disposition': 'attachment; filename="test.txt"'
+        'response-content-disposition': 'attachment; filename="test.txt"'
       }, function(err, presignedUrl) {
         if (err) return error(err);
         debug('generated url');
