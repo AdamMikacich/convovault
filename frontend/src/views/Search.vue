@@ -82,6 +82,13 @@ export default {
         http.send(null);
       })
     },
+    async save(url, name) {
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', name);
+      a.click();
+      console.log(a, url, name);
+    },
     async search() {
       const { session } = this.$route.query;
 
@@ -129,7 +136,7 @@ export default {
       if (result === null) {
         window.location.reload();
       } else {
-        console.log(result);
+        this.save(result, asset.name);
       }
     }
   }
