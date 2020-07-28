@@ -6,6 +6,10 @@
         <button class="primary" @click="search">Search</button>
         <button @click="inputs.search = ''">Clear</button>
       </div>
+      <div class="row dates">
+        <datetime v-model="inputs.start"></datetime>
+        <datetime v-model="inputs.end"></datetime>
+      </div>
       <div
         class="assets"
         v-if="view === true"
@@ -52,14 +56,21 @@
 
 <script>
 import config from '@/config/data.json';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
   name: 'Search',
+  components: {
+    Datetime
+  },
   data() {
     return {
       results: [],
       inputs: {
-        search: ''
+        search: '',
+        startDatetime: null,
+        endDatetime: null
       },
       view: false,
       assets: []
@@ -146,7 +157,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .container {
   margin-top: 40px;
   max-width: 1000px;
@@ -166,7 +177,7 @@ input {
   border-radius: 5px;
   max-width: 1000px;
   width: calc(100% - 220px);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -181,6 +192,41 @@ button {
 
 button.primary {
   background: #448deb;
+}
+
+.row.dates {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.row.dates .vdatetime {
+  width: calc(50% - 5px);
+}
+
+.row.dates input {
+  height: 50px;
+  width: 100%;
+}
+
+.row.dates .vdatetime:first-child {
+  margin-right: 10px;
+}
+
+.vdatetime-popup {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.vdatetime-popup__header {
+  background: #448deb;
+}
+
+.vdatetime-calendar__month__day--selected > span > span, .vdatetime-calendar__month__day--selected:hover > span > span {
+  background: #448deb;
+}
+
+.vdatetime-popup__actions__button {
+  color: #448deb;
 }
 
 ul {
