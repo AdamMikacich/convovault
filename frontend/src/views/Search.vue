@@ -132,7 +132,7 @@ export default {
       if (results === null) {
         window.location.reload();
       } else {
-
+        console.log('not null');
       }
     }
   }
