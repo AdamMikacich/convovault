@@ -124,15 +124,12 @@ export default {
       let url = `${config.paths.convovault}/assets/url?session=${session}`;
       url += `&id=${asset.id}`;
       
-      let results = await this.request(url);
-      results = JSON.parse(results);
+      let result = await this.request(url);
 
-      console.log(results);
-
-      if (results === null) {
+      if (result === null) {
         window.location.reload();
       } else {
-        console.log('not null');
+        console.log(result);
       }
     }
   }

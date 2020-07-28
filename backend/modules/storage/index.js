@@ -70,7 +70,7 @@ class Storage {
     return new Promise((resolve, reject) => {
       this.minioClient.presignedGetObject('assets', id, 1*60*60, function(err, presignedUrl) {
         if (err) return error(err);
-        debug('generated url', presignedUrl);
+        debug('generated url');
         resolve(presignedUrl);
       })
     });
