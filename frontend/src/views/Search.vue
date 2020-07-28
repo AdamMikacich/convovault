@@ -31,7 +31,12 @@
           <div class="column">
             <h1>{{ message.user.real_name }} ({{ message.user.name }})<span> &#183; {{ message.createdAt }}</span></h1>
             <p>{{ message.content }}</p>
-            <h2 @click="open(message.assets)">View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}</h2>
+            <h2
+              v-if="message.assets.length > 0"
+              @click="open(message.assets)"
+            >
+              View {{ message.assets.length }} Asset{{ message.assets.length === 1 ? '' : 's' }}
+            </h2>
           </div>
         </li>
       </ul>
@@ -187,7 +192,6 @@ ul {
 }
 
 li {
-  min-height: 70px;
   width: 100%;
   background: white;
   text-align: left;
