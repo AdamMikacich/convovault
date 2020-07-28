@@ -232,7 +232,7 @@ li h2 {
 .assets {
   margin: 20px;
   z-index: 10;
-  position: absolute;
+  position: fixed;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   max-width: 960px;
