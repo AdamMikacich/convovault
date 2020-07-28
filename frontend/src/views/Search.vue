@@ -118,7 +118,7 @@ export default {
       this.view = false;
       this.assets = [];
     },
-    download(asset) {
+    async download(asset) {
       const { session } = this.$route.query;
 
       let url = `${config.paths.convovault}/assets/url?session=${session}`;
@@ -132,7 +132,7 @@ export default {
       if (results === null) {
         window.location.reload();
       } else {
-        
+
       }
     }
   }
