@@ -4,11 +4,12 @@
       <div class="row">
         <input type="text" placeholder="Search..." v-model="inputs.search">
         <button class="primary" @click="search">Search</button>
-        <button @click="inputs.search = ''">Clear</button>
+        <button @click="inputs.search = ''">Clear Query</button>
       </div>
       <div class="row dates">
-        <datetime v-model="inputs.start" :value-zone="timezone"></datetime>
-        <datetime v-model="inputs.end" :value-zone="timezone"></datetime>
+        <datetime v-model="inputs.dateStart" :value-zone="timezone" placeholder="Start Date"></datetime>
+        <datetime v-model="inputs.dateEnd" :value-zone="timezone" placeholder="End Date"></datetime>
+        <button @click="inputs.dateStart = null; inputs.dateEnd = null;">Clear Date</button>
       </div>
       <div
         class="assets"
@@ -71,8 +72,8 @@ export default {
       results: [],
       inputs: {
         search: '',
-        startDatetime: null,
-        endDatetime: null
+        dateStart: null,
+        dateEnd: null
       },
       view: false,
       assets: [],
@@ -113,6 +114,8 @@ export default {
 
       let url = `${config.paths.convovault}/query?session=${session}`;
       if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
+      url += `&datestart=${this.inputs.dateStart}`;
+      url += `&dateend=${this.inputs.dateEnd}`;
       let results = await this.request(url);
       results = JSON.parse(results);
 
@@ -188,6 +191,7 @@ button {
   background: #828DAB;
   border-radius: 5px;
   width: 100px;
+  min-width: 100px;
   margin-left: 10px;
   border: none;
   color: white;
