@@ -7,8 +7,8 @@
         <button @click="inputs.search = ''">Clear</button>
       </div>
       <div class="row dates">
-        <datetime v-model="inputs.start"></datetime>
-        <datetime v-model="inputs.end"></datetime>
+        <datetime v-model="inputs.start" :value-zone="timezone"></datetime>
+        <datetime v-model="inputs.end" :value-zone="timezone"></datetime>
       </div>
       <div
         class="assets"
@@ -57,7 +57,9 @@
 <script>
 import config from '@/config/data.json';
 import { Datetime } from 'vue-datetime';
-import 'vue-datetime/dist/vue-datetime.css'
+import 'vue-datetime/dist/vue-datetime.css';
+
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export default {
   name: 'Search',
@@ -73,7 +75,8 @@ export default {
         endDatetime: null
       },
       view: false,
-      assets: []
+      assets: [],
+      timezone
     }
   },
   mounted() {
