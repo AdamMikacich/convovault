@@ -116,8 +116,6 @@ export default {
       let results = await this.request(url);
       results = JSON.parse(results);
 
-      console.log(results);
-
       if (results[0] === null) return;
       this.assets = results;
     },
