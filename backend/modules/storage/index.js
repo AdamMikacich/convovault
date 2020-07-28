@@ -53,10 +53,10 @@ class Storage {
     });
   }
 
-  async saveFile(file) {
-    debug(file);
+  async saveAsset(asset) {
+    debug(asset);
 
-    const content = await this.getFileFromURL(file.url_private);
+    const content = await this.getFileFromURL(asset.url_private);
     const id = uuidv4();
     this.minioClient.putObject('assets', id, content, (err, etag) => {
       if (err) return error(err);
@@ -66,13 +66,12 @@ class Storage {
     return id;
   }
 
-  async getFile(id) {
+  async getAssetURL(id) {
     return new Promise((resolve, reject) => {
-      const location = path.join(__dirname, `../../tmp/${id}`);
-      this.minioClient.fGetObject('assets', id, location, function(err) {
+      this.minioClient.presignedGetObject('assets', id, 1*60*60, function(err, presignedUrl) {
         if (err) return error(err);
-        debug('saved in tmp', id);
-        resolve();
+        debug('generated url', presignedUrl);
+        resolve(presignedUrl);
       })
     });
   }

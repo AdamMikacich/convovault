@@ -182,7 +182,7 @@ class DB {
 
     let assets = '';
     if (event.subtype === 'file_share') {
-      assets = await this.saveFiles(event.files);
+      assets = await this.saveAssets(event.files);
     }
 
     return Messages.create({
@@ -194,15 +194,15 @@ class DB {
     });
   }
 
-  async saveFiles(files) {
+  async saveAssets(assets) {
     const { Assets } = this.models;
 
     const ids = [];
-    for (const file of files) {
-      const id = await storage.saveFile(file);
+    for (const asset of assets) {
+      const id = await storage.saveAsset(asset);
       await Assets.create({
         id,
-        name: file.name
+        name: asset.name
       });
       ids.push(id);
     }
@@ -303,10 +303,8 @@ class DB {
     return results;
   }
 
-  async getAsset(query) {
-    const { Sessions, Assets } = this.models;
-
-    debug(query);
+  async getAssetURL(query) {
+    const { Sessions } = this.models;
 
     const { id } = query;
 
@@ -320,14 +318,7 @@ class DB {
     });
     if (session === null) return null;
 
-    storage.getFile(id);
-
-    const result = await Assets.findOne({
-      where: {
-        id
-      }
-    });
-    return result.name;
+    return storage.getAssetURL(id);
   }
 }
 
