@@ -252,6 +252,10 @@ class DB {
       }
     }
 
+    if (query.user) {
+      where.user_id = query.user;
+    }
+
     const results = await Messages.findAll({
       where,
       include: [{
