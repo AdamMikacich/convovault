@@ -9,7 +9,7 @@
       <div class="row dates">
         <datetime v-model="inputs.dateStart" :value-zone="timezone" placeholder="Start Date"></datetime>
         <datetime v-model="inputs.dateEnd" :value-zone="timezone" placeholder="End Date"></datetime>
-        <button @click="inputs.dateStart = null; inputs.dateEnd = null;">Clear Date</button>
+        <button @click="inputs.dateStart = ''; inputs.dateEnd = '';">Clear Date</button>
       </div>
       <div class="row users">
         <select name="users" v-model="inputs.user">
@@ -22,7 +22,7 @@
             {{ user.real_name }} ({{ user.name }})
           </option>
         </select>
-        <button @click="inputs.user = null">Clear User</button>
+        <button @click="inputs.user = ''">Clear User</button>
       </div>
       <div
         class="assets"

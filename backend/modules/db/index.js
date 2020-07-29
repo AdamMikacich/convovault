@@ -271,7 +271,7 @@ class DB {
       }
     }
 
-    debug('where', where);
+    debug('where', JSON.stringify(where, null, 2));
 
     const results = await Messages.findAll({
       where,
