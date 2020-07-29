@@ -256,6 +256,23 @@ class DB {
       where.user_id = query.user;
     }
 
+    if (query.datestart && query.dateend) {
+      where.createdAt = {
+        [Op.gte]: query.datestart,
+        [Op.lte]: query.dateend,
+      }
+    } else if (query.datestart) {
+      where.createdAt = {
+        [Op.gte]: query.datestart
+      }
+    } else if (query.dateend) {
+      where.createdAt = {
+        [Op.lte]: query.dateend
+      }
+    }
+
+    debug('where', where);
+
     const results = await Messages.findAll({
       where,
       include: [{
