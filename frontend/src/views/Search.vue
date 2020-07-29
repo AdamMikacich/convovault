@@ -14,9 +14,13 @@
       <div class="row users">
         <select name="users" v-model="inputs.user">
           <option disabled selected value="">User</option>
-          <option value="saab">Bob</option>
-          <option value="mercedes">Dude</option>
-          <option value="audi">Another dude</option>
+          <option
+            v-for="user of users"
+            :key="'user' + user.user_id"
+            :value="user.user_id"
+          >
+            {{ user.real_name }} ({{ user.name }})
+          </option>
         </select>
         <button @click="inputs.user = null">Clear User</button>
       </div>
