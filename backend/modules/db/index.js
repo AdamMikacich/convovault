@@ -328,8 +328,6 @@ class DB {
   async getUsers(query) {
     const { Sessions, Users } = this.models;
 
-    const ids = query.ids.split(',');
-
     const session = await Sessions.findOne({
       where: {
         id: query.session,
