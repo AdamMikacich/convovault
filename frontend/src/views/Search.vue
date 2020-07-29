@@ -102,6 +102,15 @@ export default {
   watch: {
     'inputs.search': function() {
       this.search();
+    },
+    'inputs.dateStart': function() {
+      this.search();
+    },
+    'inputs.dateEnd': function() {
+      this.search();
+    },
+    'inputs.user': function() {
+      this.search();
     }
   },
   methods: {
