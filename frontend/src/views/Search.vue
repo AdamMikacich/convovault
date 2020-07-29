@@ -13,7 +13,7 @@
       </div>
       <div class="row users">
         <select name="users" v-model="inputs.user">
-          <option disabled selected value="null">User</option>
+          <option disabled selected value="">User</option>
           <option value="saab">Bob</option>
           <option value="mercedes">Dude</option>
           <option value="audi">Another dude</option>
@@ -79,11 +79,12 @@ export default {
   data() {
     return {
       results: [],
+      users: [],
       inputs: {
         search: '',
-        dateStart: null,
-        dateEnd: null,
-        user: null
+        dateStart: '',
+        dateEnd: '',
+        user: ''
       },
       view: false,
       assets: [],
@@ -92,6 +93,7 @@ export default {
   },
   mounted() {
     this.search();
+    this.getUsers();
   },
   watch: {
     'inputs.search': function() {
@@ -112,6 +114,15 @@ export default {
         http.send(null);
       })
     },
+    async getUsers() {
+      const { session } = this.$route.query;
+
+      let url = `${config.paths.convovault}/users?session=${session}`;
+      let results = await this.request(url);
+      results = JSON.parse(results);
+
+      this.users = results;
+    },
     async save(url) {
       const a = document.createElement('a');
       a.setAttribute('href', url);
@@ -126,6 +137,7 @@ export default {
       if (this.inputs.search.length > 0) url += `&search=${this.inputs.search}`;
       url += `&datestart=${this.inputs.dateStart}`;
       url += `&dateend=${this.inputs.dateEnd}`;
+      url += `&user=${this.inputs.user}`;
       let results = await this.request(url);
       results = JSON.parse(results);
 
