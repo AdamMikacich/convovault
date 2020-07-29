@@ -82,6 +82,16 @@ class HTTP {
       res.status(200).send(url);
     });
 
+    app.get('/users', async (req, res) => {
+      const query = req.query;
+      debug(query);
+
+      const results = await db.getUsers(query);
+      debug(results);
+
+      res.status(200).send(results);
+    });
+
     app.use('/', express.static(path.join(__dirname, './../../../frontend/dist')));
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, './../../../frontend/dist/index.html'));

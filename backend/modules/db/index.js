@@ -275,8 +275,6 @@ class DB {
   async getAssets(query) {
     const { Sessions, Assets } = this.models;
 
-    debug(query);
-
     const ids = query.ids.split(',');
 
     const session = await Sessions.findOne({
@@ -325,6 +323,24 @@ class DB {
     });
 
     return storage.getAssetURL(id, name);
+  }
+
+  async getUsers(query) {
+    const { Sessions, Users } = this.models;
+
+    const ids = query.ids.split(',');
+
+    const session = await Sessions.findOne({
+      where: {
+        id: query.session,
+        expiration: {
+          [Op.gt]: Sequelize.literal('CURRENT_TIMESTAMP')
+        }
+      }
+    });
+    if (session === null) return [null];
+
+    return Users.findAll();
   }
 }
 

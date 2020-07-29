@@ -121,6 +121,8 @@ export default {
       let results = await this.request(url);
       results = JSON.parse(results);
 
+      console.log(results);
+
       this.users = results;
     },
     async save(url) {
