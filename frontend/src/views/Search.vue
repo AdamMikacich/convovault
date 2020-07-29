@@ -13,7 +13,7 @@
       </div>
       <div class="row users">
         <select name="users" v-model="inputs.user">
-          <option disabled selected value="">User</option>
+          <option disabled selected value="">Any User</option>
           <option
             v-for="user of users"
             :key="'user' + user.user_id"
