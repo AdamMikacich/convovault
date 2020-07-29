@@ -203,6 +203,7 @@ export default {
 <style lang="scss">
 .container {
   margin-top: 40px;
+  padding-bottom: 40px;
   max-width: 1000px;
   width: calc(100vw - 100px);
 }
